@@ -1,0 +1,23 @@
+* {
+  font-family: sans-serif;
+  margin-left: 20px;
+}
+
+.chat {
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.msg {
+  background-color: rgb(92, 182, 227);
+  padding: 5px 15px;
+  border-radius: 16px;
+}
+.heading {
+  background-color: rgb(27, 119, 223);
+  color: white;
+  padding: 5px 25px;
+  border-radius: 16px;
+  margin-left: 0px;
+}
