@@ -2,11 +2,13 @@ const express = require("express");     //require express
 const mongoose = require("mongoose");       
 const path = require("path");
 const Chat = require("./models/chat.js");
+const { read } = require("fs");
 const app = express();
 
 app.set("views", path.join(__dirname , "/views"));      //to set new directory path 
 app.set("view engine","ejs");               //this is set for using ejs templates
 app.use(express.static(path.join(__dirname,"public")));
+app.use(express.urlencoded({entended : true}));     //for parsing data 
 
 main().then(()=>{
     console.log("connecting succesful")
@@ -36,6 +38,34 @@ app.get("/chats",async (req,res)=>{
     let chats = await Chat.find();
     console.log(chats);
     res.render("index.ejs",{chats});
+})
+
+//new rout
+app.get("/chats/new",(req,res)=>{
+    // res.send("this is new page route");
+    // console.log("connected to new route");
+    res.render("new.ejs");
+})
+
+//create route
+app.post("/chats",(req,res)=>{
+    // console.log("again back to chat page");
+    let {from, to ,msg}= req.body;
+    let newChat = new Chat({
+        from : from,
+        to : to,
+        msg: msg,
+        created_at: new Date(),
+    })
+    newChat
+        .save()
+            .then((res)=>{
+                console.log("chat was saved");
+            }).catch((err)=>{
+                console.log(err);
+            })
+    console.log(newChat);
+    res.redirect("/chats");
 })
 
 app.get("/",(req,res)=>{
