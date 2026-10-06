@@ -13,7 +13,7 @@ app.use(express.urlencoded({entended : true}));     //for parsing data
 app.use(methodOverride("_method"));         //to send PUT & DELETE request we use methodOverride package 
 
 main().then(()=>{
-    console.log("connecting succesful");
+    console.log("mongodb connecting succesful");
 }).catch((err) =>{
     console.log(err);
 })
@@ -31,7 +31,7 @@ let chat1 = new Chat({          //create a chat1 data
 });
 
 chat1.save().then((res)=>{      //to save this chat1
-    console.log("chat was saved");
+    console.log(res);
 }).catch((err)=>{
     console.log(err);
 })
@@ -94,6 +94,13 @@ app.put("/chats/:id",async (req,res)=>{
 app.get("/",(req,res)=>{
     res.send("this is home page.");
 })
+
+app.delete("/chats/:id",async (req,res)=>{
+    let {id} = req.params;
+    let deletedChat = await Chat.findByIdAndDelete(id);
+    console.log(deletedChat);
+    res.redirect("/chats");
+});
 
 app.listen(8080, ()=>{
     console.log("server is listening on port 8080.");

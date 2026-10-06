@@ -12,7 +12,15 @@
     </p>
 
     <form method="POST" action="/chats/<%=chat._id %>?_method=PUT">
-      <textarea name="msg" cols="50" rows="10"><%=chat.msg %></textarea><br />
+      <textarea
+        placeholder="Edit your Message : "
+        name="msg"
+        cols="50"
+        rows="10"
+      >
+<%=chat.msg %></textarea
+      >
+      <br />
       <button>Edit</button>
     </form>
   </body>
